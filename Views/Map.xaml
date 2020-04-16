@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="FlightSimulatorApp.Views.Map"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+             xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
+             xmlns:local="clr-namespace:FlightSimulatorApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <m:Map ZoomLevel="12" Center="32.002644,34.88871" CredentialsProvider="5bz5OlCNNExqGiZfUwns~HHSuPb08WVX0nl8-rr-kCg~AotI_0L-64aTeWEQS9XXtgl_Hl_kKlogufdZBrzTbpDNJOX_8nTSu-ff3FJSTYeQ">
+            <m:Pushpin m:Name="airplane" m:MapLayer.Position="{Binding Path=Location}" />
+        </m:Map>
+    </Grid>
+</UserControl>

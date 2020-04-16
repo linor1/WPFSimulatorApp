@@ -16,3 +16,17 @@ C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\FlightS
 C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\Views\Joystick.g.cs
 C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\Views\Joystick.baml
 C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\bin\Debug\Microsoft.Maps.MapControl.WPF.dll
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\bin\Debug\Microsoft.Maps.MapControl.WPF.xml
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\FlightSimulatorApp.csproj.CopyComplete
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\Views\Map.g.cs
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\Views\Map.baml
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\bin\Debug\DynamicDataDisplay.dll
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\bin\Debug\DynamicDataDisplay.Maps.dll
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\bin\Debug\DynamicDataDisplay.Markers.dll
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\bin\Debug\DynamicDataDisplay.Markers2.dll
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\bin\Debug\Parser.dll
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\Views\DashBoard.g.cs
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\Views\DashBoard.baml
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\Views\Windows\SettingsWindow.g.cs
+C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\obj\Debug\Views\Windows\SettingsWindow.baml

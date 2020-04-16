@@ -5,9 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightSimulatorApp.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Canvas  x:Name="Base" Margin="0" Width="340" Height="340">
+             d:DesignHeight="500" d:DesignWidth="800">
+
+    <Grid Background="BlanchedAlmond">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="80"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Canvas Background="Bisque"  x:Name="Base" Width="340" Height="340" Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" >
+
             <Ellipse HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="340">
                 <Ellipse.Fill>
                     <RadialGradientBrush>
@@ -49,14 +61,14 @@
                 </Path.RenderTransform>
             </Path>
 
-            <Canvas  x:Name="Knob" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92" Height="91" RenderTransformOrigin="0.5,0.5" Canvas.Left="125" Canvas.Top="125" MouseDown="Knob_MouseDown" MouseMove="Knob_MouseMove" MouseUp="Knob_MouseUp">
+            <Canvas  x:Name="Knob" VerticalAlignment="Top" HorizontalAlignment="Left" Width="0" Height="0" RenderTransformOrigin="0.5,0.5" Canvas.Left="125" Canvas.Top="125" MouseDown="Knob_MouseDown" MouseMove="Knob_MouseMove" MouseUp="Knob_MouseUp">
                 <StackPanel Orientation="Vertical" Height="91">
-                    <TextBlock Name="XTextBlock"/>
+                    <!--TextBlock Name="XTextBlock"/>
                     <TextBlock Name="YTextBlock"/>
                     <TextBlock Name="XMousePos"/>
                     <TextBlock Name="YMousePos"/>
                     <TextBlock Name="XPolPos"/>
-                    <TextBlock Name="YPolPos"/>
+                    <TextBlock Name="YPolPos"/-->
                 </StackPanel>
                 <Ellipse x:Name="Shadow" HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="86" Fill="#52131212" Canvas.Left="22" Canvas.Top="18" />
                 <Ellipse x:Name="KnobBase" HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.5,0.5" Canvas.Top="1">
@@ -134,12 +146,12 @@
                 <Canvas.Resources>
                     <Storyboard x:Key="CenterKnob" Name="centerKnob" Completed="CenterKnob_Completed">
                         <DoubleAnimation Storyboard.TargetName="knobPosition"
-                             Storyboard.TargetProperty="X" To="0" Duration="0:0:1">
+                             Storyboard.TargetProperty="X" To="0" Duration="0:0:0.2">
                             <DoubleAnimation.EasingFunction>
                                 <BackEase EasingMode="EaseInOut" />
                             </DoubleAnimation.EasingFunction>
                         </DoubleAnimation>
-                        <DoubleAnimation Storyboard.TargetName="knobPosition" Storyboard.TargetProperty="Y" To="0" Duration="0:0:1">
+                        <DoubleAnimation Storyboard.TargetName="knobPosition" Storyboard.TargetProperty="Y" To="0" Duration="0:0:0.2">
                             <DoubleAnimation.EasingFunction>
                                 <BackEase EasingMode="EaseInOut" />
                             </DoubleAnimation.EasingFunction>
@@ -148,5 +160,68 @@
                 </Canvas.Resources>
             </Canvas>
         </Canvas>
+        <TextBlock FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Text="{Binding Throttle}"/>
+        <TextBlock FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"  Grid.Row="0" Grid.Column="1">← rudder →</TextBlock>
+        <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="56"></RowDefinition>
+                <RowDefinition Height="Auto" MinHeight="3.2"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock FontSize="20" FontWeight="Bold" Text="{Binding Rudder}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="2"/>
+            <TextBlock FontSize="20" FontWeight="Bold" Text="{Binding Elevator}" Grid.Column="1" Margin="0.4,39,-0.4,-2.2" Grid.RowSpan="2">
+                <TextBlock.LayoutTransform>
+                    <RotateTransform Angle="90"/>
+                </TextBlock.LayoutTransform>
+            </TextBlock>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" ><Run Text="← aileron →"/></TextBlock>
+
+        </StackPanel>
+        <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock FontSize="20" FontWeight="Bold" Text="← throttle →" 
+                       Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="1" Margin="1,150" VerticalAlignment="Stretch" RenderTransformOrigin="0.533,0.272">
+                <TextBlock.LayoutTransform>
+                    <RotateTransform Angle="90"/>
+                </TextBlock.LayoutTransform>
+            </TextBlock>
+            <Slider Value="{Binding Aileron}" Orientation="Horizontal" 
+                    VerticalAlignment="Bottom" IsSnapToTickEnabled="True" 
+                Minimum="-1" Maximum="1" TickPlacement="Both"  TickFrequency="0.01" 
+                    AutoToolTipPlacement="BottomRight" RenderTransformOrigin="0.493,1.306" Height="42" 
+                    ValueChanged="Slider_ValueChanged_1"  Grid.Column="1" Margin="100,10,-300,0" Grid.Row="2" Grid.ColumnSpan="2"/>
+            <Slider Value="{Binding Throttle}" Width="300" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1"
+                    IsSnapToTickEnabled="True" 
+                Minimum="-1" Maximum="1" TickPlacement="Both"  TickFrequency="0.01" 
+                    AutoToolTipPlacement="BottomRight" IsDirectionReversed="True" ValueChanged="Slider_ValueChanged">
+                <Slider.LayoutTransform>
+                    <RotateTransform Angle="90"/>
+                </Slider.LayoutTransform>
+            </Slider>
+
+        </Grid>
+
+        <TextBlock FontSize="20" FontWeight="Bold" Text="← elevator →" Grid.Row="1" Grid.Column="2"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" >
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="90"/>
+            </TextBlock.LayoutTransform>
+        </TextBlock>
+        <TextBlock Text="{Binding Aileron}" Grid.Row="2" Grid.Column="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"
+                 VerticalAlignment="Center" ></TextBlock>
+
     </Grid>
+
+
+
 </UserControl>

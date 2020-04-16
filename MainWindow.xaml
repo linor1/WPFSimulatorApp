@@ -5,9 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:FlightSimulatorApp.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1080.8">
+        Title="MainWindow" Height="900" Width="1080.8">
     <Grid>
-        <views:Joystick x:Name="myJoystick" DragEnter="Joystick_DragEnter"  Margin="0,0,0.4,0.4" RenderTransformOrigin="0.485,0.515"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="600"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Flight Simulator" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"></TextBlock>
+        <views:Map Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"  />
+        <Button x:Name="ConnectButton" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="10" Command="{Binding ConnectCommand}">Connect</Button>
+        <Button x:Name="SettingsButton" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10" Command="{Binding SettingsCommand}">Settings</Button>
+        <views:Joystick Grid.Row="2" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  ></views:Joystick>
+        <views:DashBoard Grid.Row="3" Grid.Column="2" Grid.RowSpan="1" Grid.ColumnSpan="2"  ></views:DashBoard>
+        <!--TabControl Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" >
+            
 
+        </-->
     </Grid>
+
+    <!--Grid Margin="26,6,0.4,0.4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="289.6"/>
+            <RowDefinition Height="43.2"/>
+            <RowDefinition Height="231.2"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="147*"/>
+            <ColumnDefinition Width="304*"/>
+            <ColumnDefinition Width="94*"/>
+            <ColumnDefinition Width="350*"/>
+            <ColumnDefinition Width="154*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+
+        <views:Joystick x:Name="myJoystick" DragEnter="Joystick_DragEnter"  Margin="51.6,188,10.4,71.6" RenderTransformOrigin="100,100" Loaded="myJoystick_Loaded" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2"/>
+        <views:Map x:Name="myMap" Margin="-14,37,313.8,10" RenderTransformOrigin="0.485,0.515" Loaded="myMap_Loaded" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="4"/>
+        <Button x:Name="ConnectButton" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" Margin="0,8,9.4,263.6" Command="{Binding ConnectCommand}" Width="47">Connect</Button>
+    </-->
 </Window>

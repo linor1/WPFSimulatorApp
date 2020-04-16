@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\linor\source\repos\FlightSimulator\FlightSimulatorApp\App.xaml
-2-1116405466
+5591929160
 
-8703897865
-14-1290796308
-MainWindow.xaml;Views\Joystick.xaml;
+29194497892
+21-473328518
+MainWindow.xaml;Views\DashBoard.xaml;Views\Joystick.xaml;Views\Map.xaml;Views\Windows\SettingsWindow.xaml;
 
 True
 
