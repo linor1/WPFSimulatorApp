@@ -2,19 +2,23 @@
 using FlightSimulatorApp.Model;
 using FlightSimulatorApp.ViewModels;
 using System.Windows;
+using FlightSimulatorApp.Views;
 
 namespace FlightSimulatorApp
 {
+
     public partial class MainWindow : System.Windows.Window
     {
         MainViewModel mainViewModel;
+        DashBoardViewModel dvm;
 
+
+       /// DashBoardViewModel dvm;
         public MainWindow()
         {
             InitializeComponent();
             mainViewModel = new MainViewModel(new MainModel());
             this.DataContext = mainViewModel;
-            
 
         }
 

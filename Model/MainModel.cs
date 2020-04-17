@@ -13,13 +13,121 @@ namespace FlightSimulatorApp.Model
 {
     class MainModel:INotifyPropertyChanged
     {
+       
         public static  bool isConnect;
         public static TcpClient tcpClient;
         public static NetworkStream networkStream;
         public static Mutex mut = new Mutex();
+        private double _throttle;
+        private double _rudder;
+        private double _aileron;
+        private double _elevator;
+        private Dictionary<string, string> mapper = new Dictionary<string, string>
+            {
+                {"rudder", "/controls/flight/rudder" },
+                {"throttle", "/controls/engines/current-engine/throttle" },
+                {"aileron" ,"/controls/flight/aileron" },
+                {"elevator", "/controls/flight/elevator" }
+            };
+        public event PropertyChangedEventHandler PropertyChanged;
 
-      
+        public void NotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
 
+        private double SendMessage(string message)
+        {
+            double d = 0.0;
+            byte[] data = Encoding.ASCII.GetBytes(message);
+            try
+            {
+                MainModel.mut.WaitOne();
+                MainModel.networkStream.Write(data, 0, data.Length);
+                byte[] buff = new byte[256];
+                MainModel.networkStream.Read(buff, 0, buff.Length);
+                string value = Encoding.ASCII.GetString(buff);
+                MainModel.mut.ReleaseMutex();
+                d = double.Parse(value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Problem with sending: " + message);
+            }
+            return d;
+        }
+
+        private string BuildMessage(string propertyName, double value)
+        {
+            string message = "";
+            //   message = "set /controls/flight/rudder -0.5\n";
+
+            message = "set " + this.mapper[propertyName] + " " + value + "\n";
+
+            //Console.WriteLine(message);
+            return message;
+        }
+
+        public double Rudder
+        {
+            get { return _rudder; }
+            set
+            {
+                _rudder = value;
+                if (MainModel.isConnect)
+                {
+                    string message = BuildMessage("rudder", value);
+
+                    SendMessage(message);
+                }
+
+            }
+        }
+
+        public double Aileron
+        {
+            get { return _aileron; }
+            set
+            {
+                _aileron = value;
+                if (MainModel.isConnect)
+                {
+                    string message = BuildMessage("aileron", value);
+                    SendMessage(message);
+                }
+            }
+        }
+
+        public double Elevator
+        {
+            get { return _elevator; }
+            set
+            {
+                _elevator = value;
+                if (MainModel.isConnect)
+                {
+                    string message = BuildMessage("elevator", value);
+                    SendMessage(message);
+                }
+
+            }
+        }
+        public double Throttle
+        {
+            get { return _throttle; }
+            set
+            {
+                _throttle = value;
+                if (MainModel.isConnect)
+                {
+                    string message = BuildMessage("throttle", value);
+                    SendMessage(message);
+                }
+            }
+        }
         private double degree;
         public double Degree
         {
@@ -29,9 +137,9 @@ namespace FlightSimulatorApp.Model
                 if (this.degree != value)
                 {
                     this.degree = value;
-                    this.OnPropertyChanged("Degree");
+                    this.NotifyPropertyChanged("Degree");
+                    
                 }
-
             }
         }
 
@@ -44,7 +152,7 @@ namespace FlightSimulatorApp.Model
                 if (this.verticalSpeed != value)
                 {
                     this.verticalSpeed = value;
-                    this.OnPropertyChanged("VerticalSpeed");
+                    this.NotifyPropertyChanged("VerticalSpeed");
                 }
 
             }
@@ -59,7 +167,7 @@ namespace FlightSimulatorApp.Model
                 if (this.groundSpeed != value)
                 {
                     this.groundSpeed = value;
-                    this.OnPropertyChanged("GroundSpeed");
+                    this.NotifyPropertyChanged("GroundSpeed");
                 }
 
             }
@@ -74,7 +182,7 @@ namespace FlightSimulatorApp.Model
                 if (this.airSpeed != value)
                 {
                     this.airSpeed = value;
-                    this.OnPropertyChanged("AirSpeed");
+                    this.NotifyPropertyChanged("AirSpeed");
                 }
 
             }
@@ -89,7 +197,7 @@ namespace FlightSimulatorApp.Model
                 if (this.gpsAltitude != value)
                 {
                     this.gpsAltitude = value;
-                    this.OnPropertyChanged("GpsAltitude");
+                    this.NotifyPropertyChanged("GpsAltitude");
                 }
 
             }
@@ -104,7 +212,7 @@ namespace FlightSimulatorApp.Model
                 if (this.rollDegree != value)
                 {
                     this.rollDegree = value;
-                    this.OnPropertyChanged("RollDegree");
+                    this.NotifyPropertyChanged("RollDegree");
                 }
 
             }
@@ -119,7 +227,7 @@ namespace FlightSimulatorApp.Model
                 if (this.pitchDegree != value)
                 {
                     this.pitchDegree = value;
-                    this.OnPropertyChanged("PitchDegree");
+                    this.NotifyPropertyChanged("PitchDegree");
                 }
 
             }
@@ -134,7 +242,7 @@ namespace FlightSimulatorApp.Model
                 if (this.altimeterAltitude != value)
                 {
                     this.altimeterAltitude = value;
-                    this.OnPropertyChanged("AltimeterAltitude");
+                    this.NotifyPropertyChanged("AltimeterAltitude");
                 }
 
             }
@@ -149,8 +257,8 @@ namespace FlightSimulatorApp.Model
                 if (this.longitude != value)
                 {
                     this.longitude = value;
-                    this.OnPropertyChanged("Longitude");
-                    this.OnPropertyChanged("Location");
+                    this.NotifyPropertyChanged("Longitude");
+                    this.NotifyPropertyChanged("Location");
                 }
 
             }
@@ -164,8 +272,8 @@ namespace FlightSimulatorApp.Model
                 if (this.latitude != value)
                 {
                     this.latitude = value;
-                    this.OnPropertyChanged("Latitude");
-                    this.OnPropertyChanged("Location");
+                    this.NotifyPropertyChanged("Latitude");
+                    this.NotifyPropertyChanged("Location");
                 }
 
             }
@@ -180,7 +288,7 @@ namespace FlightSimulatorApp.Model
                 if (this.location != value)
                 {
                     this.location = value;
-                    this.OnPropertyChanged("Location");
+                    this.NotifyPropertyChanged("Location");
                 }
             }
             
@@ -189,18 +297,16 @@ namespace FlightSimulatorApp.Model
         public void OnPropertyChanged(string propName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-            //if (this.PropertyChanged != null)
-            //{
-            //    this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            //}
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    
     
         public MainModel()
         {
             Location = "32.002644,34.8887";
+            
+
         }
         public void connect(string ip, int port)
         {
@@ -217,54 +323,6 @@ namespace FlightSimulatorApp.Model
             }
 
         }
-
-        //public void Start()
-        //{
-        //    //getting the dashboard information
-        //    new Thread(delegate ()
-        //    {
-        //        if (Thread.CurrentThread.Name == null)
-        //        {
-        //            Thread.CurrentThread.Name = "RequestPropsThread";
-        //        }
-        //        bool stop = false;
-        //        NetworkStream stream;
-        //        // System.Net.IPAddress ipaddress = System.Net.IPAddress.Parse("127.0.0.1");
-        //        //  IPEndPoint ep = new IPEndPoint(ipaddress, 5402);
-        //        string send = "set/controls/flight/rudder -20";
-        //        TcpClient tcpClient = new TcpClient();
-        //        tcpClient.Connect("127.0.0.1", 5402);
-        //        stream = tcpClient.GetStream();
-        //        while (true)
-        //        {
-        //            Console.WriteLine("entered new thread");
-        //            mut.WaitOne();
-        //            byte[] commandByte = Encoding.ASCII.GetBytes("get /instrumentation/heading-indicator/indicated-heading-deg\n");
-        //            Console.WriteLine("entered new thread");
-        //            try
-        //            {
-        //                stream.Write(commandByte, 0, commandByte.Length);
-        //            }
-        //            catch (IOException ex)
-        //            {
-
-        //            }
-        //            try
-        //            {
-        //                byte[] buff = new byte[256];
-        //                stream.Read(buff, 0, buff.Length);
-        //                string input = Encoding.ASCII.GetString(buff);
-        //                //  double d = Math.Round(double.Parse(input), 4);
-        //                Console.WriteLine(input);
-        //            }
-        //            catch (IOException EX)
-        //            {
-
-        //            }
-        //            mut.ReleaseMutex();
-        //        }
-        //    }).Start();
-        //}
 
         public double getParameterValue(string command) {
 
@@ -308,7 +366,7 @@ namespace FlightSimulatorApp.Model
                
                 // System.Net.IPAddress ipaddress = System.Net.IPAddress.Parse("127.0.0.1");
                 //  IPEndPoint ep = new IPEndPoint(ipaddress, 5402);
-                string send = "set/controls/flight/rudder -20";
+            //    string send = "set/controls/flight/rudder -20";
 
                 while (isConnect)
                 {
@@ -333,52 +391,14 @@ namespace FlightSimulatorApp.Model
                     this.Location = this.Longitude.ToString() + "," + this.Latitude.ToString();
                     Console.WriteLine(Longitude.ToString());
                     Console.WriteLine(Latitude.ToString());
+                    Console.WriteLine(Degree.ToString());
                    
                     mut.ReleaseMutex();
-                    Thread.Sleep(1000);
+                     Thread.Sleep(1000);
+
                 }
-
-                /* mut.WaitOne();
-                 telnetClient.write("get /instrumentation/heading-indicator/indicated-heading-deg\n");
-                 Degree = Math.Round(double.Parse(telnetClient.read()), 4);
-
-                 telnetClient.write("get /instrumentation/gps/indicated-vertical-speed\n");
-                 VerticalSpeed = Math.Round(double.Parse(telnetClient.read()), 4);
-
-                 telnetClient.write("get /instrumentation/gps/indicated-ground-speed-kt\n");
-                 GroundSpeed = Math.Round(double.Parse(telnetClient.read()), 4);
-
-                 telnetClient.write("get /instrumentation/airspeed-indicator/indicated-speed-kt\n");
-                 AirSpeed = Math.Round(double.Parse(telnetClient.read()), 4);
-
-                 telnetClient.write("get /instrumentation/gps/indicated-altitude-ft\n");
-                 GpsAltitude = Math.Round(double.Parse(telnetClient.read()), 4);
-
-                 telnetClient.write("get /instrumentation/attitude-indicator/internal-roll-deg\n");
-                 RollDegree = Math.Round(double.Parse(telnetClient.read()), 4);
-
-                 telnetClient.write("get /instrumentation/attitude-indicator/internal-pitch-deg\n");
-                 PitchDegree = Math.Round(double.Parse(telnetClient.read()), 4);
-
-                 telnetClient.write("get /instrumentation/altimeter/indicated-altitude-ft\n");
-                 AltimeterAltitude = Math.Round(double.Parse(telnetClient.read()), 4);
-
-                 for (int i = 0; i < 5; i++)
-                 {
-                     telnetClient.write("get /position/longitude-deg\n");
-                     Longitude = Math.Round(double.Parse(telnetClient.read()), 4);
-                     // OnPropertyChanged("X");
-
-                     telnetClient.write("get /position/latitude-deg\n");
-                     Latitude = Math.Round(double.Parse(telnetClient.read()), 4);
-                     OnPropertyChanged("Y");
-                     Thread.Sleep(50);
-                 }
-                 mut.ReleaseMutex();
-                 */
-
-                //  }
             }).Start();
+
         }
 
             public void disconnect()

@@ -12,6 +12,7 @@ namespace FlightSimulatorApp.ViewModels
     class MapVM
     {
         private MainModel model;
+        
         public MapVM()
         {
             this.model = new MainModel();

@@ -12,47 +12,35 @@ namespace FlightSimulatorApp.Model
         private double _rudder;
         private double _aileron;
         private double _elevator;
-      private Dictionary<string,string>  mapper = new Dictionary<string, string>
+        private Dictionary<string, string> mapper = new Dictionary<string, string>
             {
                 {"rudder", "/controls/flight/rudder" },
                 {"throttle", "/controls/engines/current-engine/throttle" },
                 {"aileron" ,"/controls/flight/aileron" },
                 {"elevator", "/controls/flight/elevator" }
             };
-    public ManualFlightModel()
+        public ManualFlightModel()
         {
 
         }
 
-        public double Throttle
-        {
-            get { return _throttle; }
-            set
-            {
-                _throttle = value;
-                if (MainModel.isConnect)
-                {
-                    string message = BuildMessage("throttle", value);
-                    SendMessage(message);
-                }
-            }
-        }
+
 
         private double SendMessage(string message)
         {
             double d = 0.0;
-            byte[] data = Encoding.ASCII.GetBytes(message );
+            byte[] data = Encoding.ASCII.GetBytes(message);
             try
             {
                 MainModel.mut.WaitOne();
                 MainModel.networkStream.Write(data, 0, data.Length);
                 byte[] buff = new byte[256];
                 MainModel.networkStream.Read(buff, 0, buff.Length);
-                string value= Encoding.ASCII.GetString(buff);
+                string value = Encoding.ASCII.GetString(buff);
                 MainModel.mut.ReleaseMutex();
                 d = double.Parse(value);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Problem with sending: " + message);
             }
@@ -62,7 +50,7 @@ namespace FlightSimulatorApp.Model
         private string BuildMessage(string propertyName, double value)
         {
             string message = "";
-         //   message = "set /controls/flight/rudder -0.5\n";
+            //   message = "set /controls/flight/rudder -0.5\n";
 
             message = "set " + this.mapper[propertyName] + " " + value + "\n";
 
@@ -112,6 +100,19 @@ namespace FlightSimulatorApp.Model
                     SendMessage(message);
                 }
 
+            }
+        }
+        public double Throttle
+        {
+            get { return _throttle; }
+            set
+            {
+                _throttle = value;
+                if (MainModel.isConnect)
+                {
+                    string message = BuildMessage("throttle", value);
+                    SendMessage(message);
+                }
             }
         }
     }

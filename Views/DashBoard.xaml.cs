@@ -23,12 +23,12 @@ namespace FlightSimulatorApp.Views
  
     public partial class DashBoard : UserControl
     {
-        private DashBoardViewModel vm;
+      //  private DashBoardViewModel vm;
         public DashBoard()
         {
             InitializeComponent();
-            this.vm = new DashBoardViewModel();
-            this.DataContext = vm;
+        //    this.vm = new DashBoardViewModel(new Model.MainModel());
+          //  this.DataContext = vm;
         }
     }
 }

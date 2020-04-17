@@ -10,7 +10,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <m:Map ZoomLevel="12" Center="32.002644,34.88871" CredentialsProvider="5bz5OlCNNExqGiZfUwns~HHSuPb08WVX0nl8-rr-kCg~AotI_0L-64aTeWEQS9XXtgl_Hl_kKlogufdZBrzTbpDNJOX_8nTSu-ff3FJSTYeQ">
-            <m:Pushpin m:Name="airplane" m:MapLayer.Position="{Binding Path=Location}" />
+                <m:Pushpin m:Name="airplane" m:MapLayer.Position="{Binding Path=Location}" />
         </m:Map>
     </Grid>
 </UserControl>

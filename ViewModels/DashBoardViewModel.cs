@@ -8,47 +8,75 @@ using FlightSimulatorApp.Model;
 
 namespace FlightSimulatorApp.ViewModels
 {
-    class DashBoardViewModel: BaseNotify
+    class DashBoardViewModel: INotifyPropertyChanged
     {
         private MainModel model;
-        public DashBoardViewModel()
+        public DashBoardViewModel(MainModel model)
         {
-            this.model = new MainModel();
-            this.model.PropertyChanged += Model_PropertyChanged;
+            this.model = model;
+            this.model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
+            {
+                OnPropertyChanged(e.PropertyName);
+            };
         }
 
-        public double Degree
+        //public double Degree
+        //{
+        //    get {
+        //        Console.WriteLine("Degree:" + Math.Round(model.Degree, 4));
+        //        return Math.Round(model.Degree, 4);
+        //    }
+        //    set
+        //    {
+        //        model.Degree = value;
+        //        OnPropertyChanged("Degree");
+        //    }
+        //}
+        //public double VerticalSpeed
+        //{
+        //    get { return Math.Round(model.VerticalSpeed, 4); }
+        //    set
+        //    {
+        //        model.VerticalSpeed = value;
+        //        OnPropertyChanged("VerticalSpeed");
+        //    }
+        //}
+        //public double GroundSpeed
+        //{
+        //    get { return Math.Round(model.GroundSpeed, 2); }
+        //}
+        //public double GpsAltitude
+        //{
+        //    get { return Math.Round(model.GpsAltitude, 2); }
+        //}
+        //public double RollDegree
+        //{
+        //    get { return Math.Round(model.RollDegree, 2); }
+        //}
+        //public double PitchDegree
+        //{
+        //    get { return Math.Round(model.PitchDegree, 2); }
+        //}
+        //public double AltimeterAltitude
+        //{
+        //    get { return Math.Round(model.AltimeterAltitude, 2); }
+        //}
+
+
+        //public void NotifyPropertyChanged(string prop) { 
+
+
+        //}
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string info)
         {
-            get { 
-                return Math.Round(model.Degree, 2); }
-            set {
-                NotifyPropertyChanged("Degree");
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(info));
             }
         }
-        public double VerticalSpeed
-        {
-            get { return Math.Round(model.VerticalSpeed, 2); }
-        }
-        public double GroundSpeed
-        {
-            get { return Math.Round(model.GroundSpeed, 2); }
-        }
-        public double GpsAltitude
-        {
-            get { return Math.Round(model.GpsAltitude, 2); }
-        }
-        public double RollDegree
-        {
-            get { return Math.Round(model.RollDegree, 2); }
-        }
-        public double PitchDegree
-        {
-            get { return Math.Round(model.PitchDegree, 2); }
-        }
-        public double AltimeterAltitude
-        {
-            get { return Math.Round(model.GroundSpeed, 2); }
-        }
+
         public void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             IMainWindowModel m = sender as IMainWindowModel;
@@ -56,7 +84,7 @@ namespace FlightSimulatorApp.ViewModels
             {
                 if (e.PropertyName.Equals("Degree"))
                 {
-                    Degree = model.Degree;
+                   // Degree = model.Degree;
                 }
              
             }

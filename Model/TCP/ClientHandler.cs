@@ -55,11 +55,6 @@ namespace FlightSimulatorApp.Model.TCP
                 client.Close();
             });
             t.Start();
-            
-
-            
-
-            
         }
     }
 }

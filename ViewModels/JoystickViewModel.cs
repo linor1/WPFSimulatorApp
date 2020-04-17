@@ -13,9 +13,7 @@ namespace FlightSimulatorApp.ViewModels
 
         public JoystickViewModel()
         {
-
             this.model = new ManualFlightModel();
-
         }
         public int MyProperty { get; set; }
 
